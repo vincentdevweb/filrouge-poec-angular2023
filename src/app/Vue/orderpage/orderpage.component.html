@@ -1,0 +1,90 @@
+<!-- <div *ngFor="let order of orders">
+  <app-order [orderDTO]="order"></app-order>
+</div> -->
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <div class="navbar-nav ml-auto">
+      <button class="btn btn-outline-primary" (click)="filterOrdersByState('CONFIRMED')">Confirmer</button>
+      <button class="btn btn-outline-success" (click)="filterOrdersByState('OPTION')">OPTION</button>
+      <button class="btn btn-outline-danger" (click)="filterOrdersByState('CANCELED')">Canceled</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2>Orders</h2>
+
+  <div *ngIf="orders && orders.length > 0" class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Type Presta</th>
+          <th>Designation</th>
+          <th>Number of Days</th>
+          <th>Unit Price</th>
+          <th>State</th>
+          <th>Client</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders ; let i = index">
+          <td>{{ order.typePresta }}</td>
+          <td>{{order.designation}}<br/><input type="text" [(ngModel)]="orderPatch.designation" name="one"/></td>
+          <td>{{order.nbDays}}<br/><input type="number" [(ngModel)]="orderPatch.nbDays" name="two" /></td>
+          <td>{{order.unitPrice}}<br/><input type="number" [(ngModel)]="orderPatch.unitPrice" name="tree"/></td>
+          <td>{{order.state}}</td>
+          <td>{{ order.client.fname }}</td>
+          <td>
+            <button class="btn btn-sm btn-info" (click)="patchOrder(order.id)">Patch</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteOrder(order.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <div class="mt-4">
+    <h3>Create Order</h3>
+    <form (ngSubmit)="createOrder()">
+      <div class="form-group">
+        <label for="CreatedTypePresta">Created Type Presta</label>
+        <input type="text" class="form-control" id="CreatedTypePresta" [(ngModel)]="newOrder.typePresta" name="ctp" required>
+      </div>
+
+      <div class="form-group">
+        <label for="CreatedDesignation">Created Designation</label>
+        <input type="text" class="form-control" id="CreatedDesignation" [(ngModel)]="newOrder.designation" name="cd" required>
+      </div>
+
+      <div class="form-group">
+        <label for="CreatedNbDays">Created Number of Days</label>
+        <input type="number" class="form-control" id="CreatedNbDays" [(ngModel)]="newOrder.nbDays" name="cnb" required>
+      </div>
+
+      <div class="form-group">
+        <label for="CreatedUnitPrice">Created Unit Price</label>
+        <input type="number" class="form-control" id="CreatedUnitPrice" [(ngModel)]="newOrder.unitPrice" name="cup" required>
+      </div>
+
+      <div class="form-group">
+        <label for="clientid">CLIENT ID</label>
+        <input type="number" class="form-control" id="clientid" [(ngModel)]="newOrder.client.id" name="cid" required>
+      </div>
+
+      <div class="form-group">
+        <label for="CreatedState">Created State</label>
+        <select class="form-control" id="CreatedState" name="createdState" [(ngModel)]="newOrder.state" required>
+          <option value="CONFIRMED">CONFIRMED</option>
+          <option value="OPTION">OPTION</option>
+          <option value="CANCELED">Canceled</option>
+        </select>
+      </div>
+      <!-- <button class="btn btn-sm btn-danger" (click)="createOrder()">Submit</button> -->
+      <button type="submit" class="btn btn-primary">Create Order</button>
+    </form>
+  </div>
